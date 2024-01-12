@@ -1,7 +1,7 @@
 //
 import axios from 'axios'
 import { Formik, FormikHelpers } from 'formik'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import FormInput from '../components/form-input.component'
@@ -15,6 +15,8 @@ interface FormValues {
 
 const CreateArticle = () => {
   //
+  const navigate = useNavigate()
+
   const handleSubmit = async (
     values: FormValues,
     { setSubmitting, resetForm }: FormikHelpers<FormValues>,
@@ -24,6 +26,7 @@ const CreateArticle = () => {
       await axios.post('https://jsonplaceholder.typicode.com/posts', values)
       toast.success('Article submitted successfully')
       resetForm()
+      navigate('/')
     } catch (error) {
       toast.error('Error creating article')
     } finally {
